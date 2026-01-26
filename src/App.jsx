@@ -7,8 +7,8 @@ import "./App.css";
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 
 function App() {
-  //Farben abspeichern damit später neue Farben hinzufügen.
   const [colors, setColors] = useState(initialColors);
+
   function handleAddColor(data) {
     const newColor = {
       id: nanoid(),
@@ -26,7 +26,11 @@ function App() {
       <ColorForm onSubmitColor={handleAddColor} />
 
       {colors.map((color) => (
-        <Color key={color.id} color={color} />
+        <Color
+          key={color.id}
+          color={color}
+          onDeleteColor={(id) => console.log("Delete clicked:", id)}
+        />
       ))}
     </>
   );
