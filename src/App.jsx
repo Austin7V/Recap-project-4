@@ -6,7 +6,8 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <Color />
+      {/* Color-Komponent gebe ich genau Ein Farbobjekt als Prop mit. */}
+      <Color color={initialColors[7]} />
     </>
   );
 }
