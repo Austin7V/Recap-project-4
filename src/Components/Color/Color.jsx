@@ -1,5 +1,9 @@
 import "./Color.css";
 
 export default function Color({ color }) {
-  return null;
+  return (
+    <div className="color-card">
+      <p>Color card!</p>
+    </div>
+  );
 }
