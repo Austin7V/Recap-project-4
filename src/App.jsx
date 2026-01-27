@@ -8,6 +8,7 @@ import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 
 function App() {
   const [colors, setColors] = useState(initialColors);
+  const [colorIdToDelete, setColorIdToDelete] = useState(null);
 
   function handleAddColor(data) {
     const newColor = {
@@ -17,6 +18,12 @@ function App() {
       contrastText: data.contrastText,
     };
     setColors((prevColors) => [newColor, ...prevColors]);
+  }
+
+  function handleDeleteColor(idToDelete) {
+    setColors((prevColors) =>
+      prevColors.filter((color) => color.id !== idToDelete),
+    );
   }
 
   return (
@@ -29,7 +36,10 @@ function App() {
         <Color
           key={color.id}
           color={color}
-          onDeleteColor={(id) => console.log("Delete clicked:", id)}
+          onDeleteColor={() => setColorIdToDelete(color.id)}
+          isConfirming={colorIdToDelete === color.id}
+          onConfirmDelete={() => handleDeleteColor(color.id)}
+          onCancelDelete={() => setColorIdToDelete(null)}
         />
       ))}
     </>

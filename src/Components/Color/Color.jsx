@@ -1,6 +1,12 @@
 import "./Color.css";
 
-export default function Color({ color, onDeleteColor }) {
+export default function Color({
+  color,
+  onDeleteColor,
+  isConfirming,
+  onConfirmDelete,
+  onCancelDelete,
+}) {
   return (
     <div
       className="color-card"
@@ -9,9 +15,22 @@ export default function Color({ color, onDeleteColor }) {
       <p className="color-card-headline">{color.hex}</p>
       <p>{color.role}</p>
       <p>contrast:{color.contrastText}</p>
-      <button type="button" onClick={() => onDeleteColor(color.id)}>
-        Delete
-      </button>
+
+      {!isConfirming ? (
+        <button type="button" onClick={onDeleteColor}>
+          Delete
+        </button>
+      ) : (
+        <>
+          <p className="color-card-headline">Really delete?</p>
+          <button type="button" onClick={onConfirmDelete}>
+            Confirm
+          </button>
+          <button type="button" onClick={onCancelDelete}>
+            Cancel
+          </button>
+        </>
+      )}
     </div>
   );
 }
