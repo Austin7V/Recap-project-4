@@ -9,6 +9,7 @@ import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 function App() {
   const [colors, setColors] = useState(initialColors);
   const [colorIdToDelete, setColorIdToDelete] = useState(null);
+  const [editingColorID, setEditingColorID] = useState(null);
 
   function handleAddColor(data) {
     const newColor = {
@@ -25,7 +26,14 @@ function App() {
       prevColors.filter((color) => color.id !== idToDelete),
     );
   }
-
+  function handleEditColor(idToEdit, data) {
+    setColors((prevColors) =>
+      prevColors.map((color) =>
+        color.id === idToEdit ? { ...color, ...data } : color,
+      ),
+    );
+    setEditingColorID(null);
+  }
   return (
     <>
       <h1>Theme Creator</h1>
@@ -40,6 +48,10 @@ function App() {
           isConfirming={colorIdToDelete === color.id}
           onConfirmDelete={() => handleDeleteColor(color.id)}
           onCancelDelete={() => setColorIdToDelete(null)}
+          onStartEdit={() => setEditingColorID(color.id)}
+          isEditing={editingColorID === color.id}
+          onCancelEdit={() => setEditingColorID(null)}
+          onSubmitEdit={handleEditColor}
         />
       ))}
     </>
