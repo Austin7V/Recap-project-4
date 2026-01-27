@@ -12,7 +12,7 @@ export default function Color({
       className="color-card"
       style={{ backgroundColor: color.hex, color: color.contrastText }}
     >
-      <p className="color-card-headline">{color.hex}</p>
+      <p className="color-card-highlight">{color.hex}</p>
       <p>{color.role}</p>
       <p>contrast:{color.contrastText}</p>
 
@@ -22,7 +22,7 @@ export default function Color({
         </button>
       ) : (
         <>
-          <p className="color-card-headline">Really delete?</p>
+          <p className="color-card-highlight">Really delete?</p>
           <button type="button" onClick={onConfirmDelete}>
             Confirm
           </button>
