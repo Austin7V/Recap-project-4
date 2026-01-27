@@ -1,4 +1,5 @@
 import "./Color.css";
+import ColorForm from "../ColorForm/ColorForm";
 
 export default function Color({
   color,
@@ -7,7 +8,31 @@ export default function Color({
   onConfirmDelete,
   onCancelDelete,
   onStartEdit,
+  isEditing,
+  onCancelEdit,
 }) {
+  if (isEditing) {
+    return (
+      <div
+        className="color-card"
+        style={{ backgroundColor: color.hex, color: color.contrastText }}
+      >
+        <ColorForm
+          onSubmitColor={() => {}}
+          initialData={{
+            role: color.role,
+            hex: color.hex,
+            contrastText: color.contrastText,
+          }}
+        />
+
+        <button type="button" onClick={onCancelEdit}>
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       className="color-card"
@@ -22,7 +47,7 @@ export default function Color({
           <button type="button" onClick={onDeleteColor}>
             Delete
           </button>
-          <button type="button" onClick={() => onStartEdit(color.id)}>
+          <button type="button" onClick={onStartEdit}>
             Edit
           </button>
         </>

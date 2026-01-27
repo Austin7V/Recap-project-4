@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      {editingColorID && <p>Editing:{editingColorID}</p>}
+      {/*       {editingColorID && <p>Editing:{editingColorID}</p>} */}
 
       <ColorForm onSubmitColor={handleAddColor} />
       {colors.length === 0 && <p>No colors... Add a new color!</p>}
@@ -38,11 +38,13 @@ function App() {
         <Color
           key={color.id}
           color={color}
-          onStartEdit={(id) => setEditingColorID(id)}
           onDeleteColor={() => setColorIdToDelete(color.id)}
           isConfirming={colorIdToDelete === color.id}
           onConfirmDelete={() => handleDeleteColor(color.id)}
           onCancelDelete={() => setColorIdToDelete(null)}
+          onStartEdit={() => setEditingColorID(color.id)}
+          isEditing={editingColorID === color.id}
+          onCancelEdit={() => setEditingColorID(null)}
         />
       ))}
     </>
