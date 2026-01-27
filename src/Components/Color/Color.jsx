@@ -10,6 +10,7 @@ export default function Color({
   onStartEdit,
   isEditing,
   onCancelEdit,
+  onSubmitEdit,
 }) {
   if (isEditing) {
     return (
@@ -18,12 +19,12 @@ export default function Color({
         style={{ backgroundColor: color.hex, color: color.contrastText }}
       >
         <ColorForm
-          onSubmitColor={() => {}}
           initialData={{
             role: color.role,
             hex: color.hex,
             contrastText: color.contrastText,
           }}
+          onSubmitColor={(data) => onSubmitEdit(color.id, data)}
         />
 
         <button type="button" onClick={onCancelEdit}>

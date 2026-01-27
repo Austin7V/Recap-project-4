@@ -26,7 +26,14 @@ function App() {
       prevColors.filter((color) => color.id !== idToDelete),
     );
   }
-
+  function handleEditColor(idToEdit, data) {
+    setColors((prevColors) =>
+      prevColors.map((color) =>
+        color.id === idToEdit ? { ...color, ...data } : color,
+      ),
+    );
+    setEditingColorID(null);
+  }
   return (
     <>
       <h1>Theme Creator</h1>
@@ -45,6 +52,7 @@ function App() {
           onStartEdit={() => setEditingColorID(color.id)}
           isEditing={editingColorID === color.id}
           onCancelEdit={() => setEditingColorID(null)}
+          onSubmitEdit={handleEditColor}
         />
       ))}
     </>
