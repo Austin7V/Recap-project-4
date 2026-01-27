@@ -36,6 +36,7 @@ function App() {
         <Color
           key={color.id}
           color={color}
+          onStartEdit={(id) => console.log("Edit click:", id)}
           onDeleteColor={() => setColorIdToDelete(color.id)}
           isConfirming={colorIdToDelete === color.id}
           onConfirmDelete={() => handleDeleteColor(color.id)}

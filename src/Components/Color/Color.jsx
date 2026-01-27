@@ -6,6 +6,7 @@ export default function Color({
   isConfirming,
   onConfirmDelete,
   onCancelDelete,
+  onStartEdit,
 }) {
   return (
     <div
@@ -17,9 +18,14 @@ export default function Color({
       <p>contrast:{color.contrastText}</p>
 
       {!isConfirming ? (
-        <button type="button" onClick={onDeleteColor}>
-          Delete
-        </button>
+        <>
+          <button type="button" onClick={onDeleteColor}>
+            Delete
+          </button>
+          <button type="button" onClick={() => onStartEdit(color.id)}>
+            Edit
+          </button>
+        </>
       ) : (
         <>
           <p className="color-card-highlight">Really delete?</p>
