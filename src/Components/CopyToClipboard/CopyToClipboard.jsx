@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CopyToClipboard({ textToCopy }) {
   const [copied, setCopied] = useState(false);
@@ -7,6 +7,16 @@ export default function CopyToClipboard({ textToCopy }) {
 
     setCopied(true);
   }
+  useEffect(() => {
+    if (!copied) return;
+
+    const timeoutId = setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+
+    return () => clearTimeout(timeoutId);
+  }, [copied]);
+
   return (
     <>
       <button type="button" onClick={handleCopie}>
