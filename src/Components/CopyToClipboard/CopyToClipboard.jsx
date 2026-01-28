@@ -2,27 +2,36 @@ import { useEffect, useState } from "react";
 
 export default function CopyToClipboard({ textToCopy }) {
   const [copied, setCopied] = useState(false);
-  async function handleCopie() {
-    await navigator.clipboard.writeText(textToCopy);
+  const [error, setError] = useState(null);
 
-    setCopied(true);
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+
+      setCopied(true);
+      setError(null);
+    } catch (err) {
+      setError("Copy failed. Please copy manually.");
+      setCopied(false);
+    }
   }
+
   useEffect(() => {
-    if (!copied) return;
+    if (!copied && !error) return;
 
     const timeoutId = setTimeout(() => {
       setCopied(false);
+      setError(null);
     }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, [copied]);
+  }, [copied, error]);
 
   return (
     <>
-      <button type="button" onClick={handleCopie}>
-        Copy
+      <button type="button" onClick={handleCopy}>
+        {copied ? "Copied!" : error ? "Copy failed" : "Copy"}
       </button>
-      ;{copied && <p>Copied!</p>}
     </>
   );
 }
