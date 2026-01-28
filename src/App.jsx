@@ -1,3 +1,4 @@
+import useLocalStorageState from "use-local-storage-state";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { initialColors } from "./lib/colors";
@@ -7,7 +8,10 @@ import "./App.css";
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 
 function App() {
-  const [colors, setColors] = useState(initialColors);
+  /*   const [colors, setColors] = useState(initialColors); */
+  const [colors, setColors] = useLocalStorageState("theme-colors", {
+    defaultValue: initialColors,
+  });
   const [colorIdToDelete, setColorIdToDelete] = useState(null);
   const [editingColorID, setEditingColorID] = useState(null);
 
