@@ -50,7 +50,9 @@ export default function Color({
       {color.contrastCheck?.error && <p>Contrast: Check failed</p>}
 
       {color.contrastCheck && !color.contrastCheck.error && (
-        <p>Contrast: {color.contrastCheck.Overall}</p>
+        <div>
+          <p>Overall Contrast Score: {color.contrastCheck.overallScore}</p>
+        </div>
       )}
 
       {!isConfirming ? (
