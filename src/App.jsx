@@ -2,13 +2,13 @@ import useLocalStorageState from "use-local-storage-state";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import { initialColors } from "./lib/colors";
+import { checkContrast } from "./lib/contrastChecker";
 import Color from "./Components/Color/Color.jsx";
 import "./App.css";
 
 import ColorForm from "./Components/ColorForm/ColorForm.jsx";
 
 function App() {
-  /*   const [colors, setColors] = useState(initialColors); */
   const [colors, setColors] = useLocalStorageState("theme-colors", {
     defaultValue: initialColors,
   });
@@ -23,12 +23,26 @@ function App() {
       contrastText: data.contrastText,
     };
     setColors((prevColors) => [newColor, ...prevColors]);
+
+    checkContrast(data.hex, data.contrastText).then((contrastData) => {
+      setColors((prevColors) =>
+        prevColors.map((color) =>
+          color.id === newColor.id
+            ? { ...color, contrastCheck: contrastData }
+            : color,
+        ),
+      );
+    });
   }
 
   function handleDeleteColor(idToDelete) {
     setColors((prevColors) =>
       prevColors.filter((color) => color.id !== idToDelete),
     );
+  }
+
+  function handleClearAll() {
+    setColors(initialColors);
   }
   function handleEditColor(idToEdit, data) {
     setColors((prevColors) =>
@@ -37,10 +51,23 @@ function App() {
       ),
     );
     setEditingColorID(null);
+
+    checkContrast(data.hex, data.contrastText).then((contrastData) => {
+      setColors((prevColors) =>
+        prevColors.map((color) =>
+          color.id === idToEdit
+            ? { ...color, contrastCheck: contrastData }
+            : color,
+        ),
+      );
+    });
   }
   return (
     <>
       <h1>Theme Creator</h1>
+      <button onClick={handleClearAll} style={{ marginBottom: "20px" }}>
+        Reset to Defaults
+      </button>
 
       <ColorForm onSubmitColor={handleAddColor} />
       {colors.length === 0 && <p>No colors... Add a new color!</p>}

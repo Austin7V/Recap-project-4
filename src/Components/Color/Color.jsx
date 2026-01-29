@@ -45,6 +45,16 @@ export default function Color({
       <p>{color.role}</p>
       <p>contrast:{color.contrastText}</p>
 
+      {!color.contrastCheck && <p>Contrast: No data</p>}
+
+      {color.contrastCheck?.error && <p>Contrast: Check failed</p>}
+
+      {color.contrastCheck && !color.contrastCheck.error && (
+        <div>
+          <p>Overall Contrast Score: {color.contrastCheck.overallScore}</p>
+        </div>
+      )}
+
       {!isConfirming ? (
         <>
           <button type="button" onClick={onDeleteColor}>
